@@ -1,5 +1,5 @@
-require "minitest/autorun"
-require "minitest/spec"
+require 'minitest/autorun'
+require 'minitest/spec'
 require 'repo_man'
 
 describe RepoMan do

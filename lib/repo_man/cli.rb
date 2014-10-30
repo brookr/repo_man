@@ -2,6 +2,7 @@ require 'repo_man'
 require 'thor'
 require 'github_api'
 
+# Register the command-line interface options
 module RepoMan
   class CLI < Thor
     class_option :pretend, type: :boolean, desc: "Don't actually make any changes"
@@ -16,7 +17,7 @@ module RepoMan
       puts "Now cloning #{repos.size} repos from #{username}..."
 
       repos.each do |r|
-        run("git clone #{r.ssh_url}") unless Dir.exists?(r.name)
+        run("git clone #{r.ssh_url}") unless Dir.exist?(r.name)
       end
     end
 
@@ -25,9 +26,10 @@ module RepoMan
       puts 'Checking all current repos for updates...'
 
       repos.each do |r|
-        run("cd #{r.name} && pwd && git pull --all") if Dir.exists?(r.name)
+        run("cd #{r.name} && pwd && git pull --all") if Dir.exist?(r.name)
       end
     end
+
   private
 
     def repos
