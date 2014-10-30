@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["brook@codefellows.org"]
   spec.summary       = %q{Keep the repos under one roof.}
   spec.description   = %q{Track all the repos for a GitHub user from one parent directory}
-  spec.homepage      = "http://repoman.gem"
+  spec.homepage      = "https://github.com/brookr/repo_man"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
