@@ -26,6 +26,14 @@ private
 
   def repos
     @repos ||= github.repos.list user: username
+  rescue Github::Error::Unauthorized => e
+    puts "\n  Missing or incorrect auth token. Please set GITHUB_TOKEN for this env.\n\n"
+    puts e.inspect
+    puts
+  rescue Github::Error::NotFound => e
+    puts "\n  Incorrenct user account. The account (#{username}) was not found.\n\n"
+    puts e.inspect
+    puts
   end
 
   def username
@@ -35,7 +43,7 @@ private
   def github
     @github ||= Github.new(
       auto_pagination: true,
-      oauth_token: '184614cd99a078b2ecd8e8ba21f85f83b4746d7d')
+      oauth_token: ENV['GITHUB_TOKEN'])
   end
 
   def run(cmd)
