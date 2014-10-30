@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+require 'thor'
+require 'github_api'
+
+class RepoMan < Thor
+  class_option :pretend, type: :boolean, desc: "Don't actually make any changes"
+
+  desc 'fetch', 'Fetches all repos into the current directory'
+  def fetch
+    puts "Now cloning #{repos.size} repos from #{username}..."
+
+    repos.each do |r|
+      run("git clone #{r.ssh_url}") unless Dir.exists?(r.name)
+    end
+  end
+
+  desc 'update', 'Updates all existing repos in the current directory'
+  def update
+    puts 'Checking all current repos for updates...'
+
+    repos.each do |r|
+      run("cd #{r.name} && pwd && git pull --all") if Dir.exists?(r.name)
+    end
+  end
+private
+
+  def repos
+    @repos ||= github.repos.list user: username
+  end
+
+  def username
+    @username ||= Dir.pwd.split(File::Separator).last
+  end
+
+  def github
+    @github ||= Github.new(
+      auto_pagination: true,
+      oauth_token: '184614cd99a078b2ecd8e8ba21f85f83b4746d7d')
+  end
+
+  def run(cmd)
+    puts cmd
+    puts `#{cmd}` unless options[:pretend]
+  end
+end
+
+RepoMan.start
