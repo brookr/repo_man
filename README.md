@@ -10,6 +10,8 @@ Install it from the command line with:
 
 ## Usage
 
+Repo Man talks to GitHub as you, via an OAuth token. Configure your environment with a `GITHUB_TOKEN` environment variable set to a value of a [Personal Access Token](https://github.com/settings/tokens).
+
 Use the binary from any directory that has a name matching a github user:
 
     $ mkdir whymirror && cd whymirror
